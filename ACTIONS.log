@@ -26,5 +26,31 @@
     Now need provide useful plurale names for them using Meta.verbose_name_plural
     Also added __unicode__ model representation so it looks meaningful in admin page
 
+5)  Needs to add rest api
+    pip install djangorestframework, markdown
+    Added rest-framework serializers, router (connected it to urls.py via '^api/')
+    It was important to use 'ModelViewSet' as a base class for your routed ViewSet
+    Linked Status and Task serializers and voila
+    api available at 'api/statuses'
+
+6)  Needs to add React shit.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
