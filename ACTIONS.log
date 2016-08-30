@@ -12,14 +12,19 @@
     manage.py migrate
     added 'schnapps.board' to INSTALLED_APPS
 
- 3) pip install django-annoying
+3)  pip install django-annoying
     add template to schnapps/templates/board.html
     add view function (with render_to 'board.html') to schnapps/board/views.py
     add routing (to view function) schnapps/board.urls.py
-    
+    Now I have Hello board
 
-
-
+4)  Now I have to add models scheme.
+    Added Status & Task models to schnapps/board/models.py
+    manage.py makemigrations
+    manage.py migrate
+    Added admins to them using simply admin.site.register()
+    Now need provide useful plurale names for them using Meta.verbose_name_plural
+    Also added __unicode__ model representation so it looks meaningful in admin page
 
 
 
