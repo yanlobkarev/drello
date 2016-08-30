@@ -1,0 +1,25 @@
+0)  virtualenv env
+    pip install django
+
+1)  django-admin startproject drello 
+    cd drello
+    mkdir schnapps
+    mkdir schnapps/board
+    manage.py startapp board schnapps/board
+
+2)  touch db.sqlite3
+    touch schnapps/__init__.py
+    manage.py migrate
+    added 'schnapps.board' to INSTALLED_APPS
+
+ 3) pip install django-annoying
+    add template to schnapps/templates/board.html
+    add view function (with render_to 'board.html') to schnapps/board/views.py
+    add routing (to view function) schnapps/board.urls.py
+    
+
+
+
+
+
+

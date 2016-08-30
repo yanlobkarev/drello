@@ -4,4 +4,4 @@ env/
 *.pyc
 _trial_temp/
 *.swp
-
+db.sqlite3
