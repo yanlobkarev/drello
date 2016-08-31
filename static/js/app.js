@@ -56,9 +56,8 @@ var Board = React.createClass({
         var statuses = _.map(this.state.statuses, function (s) {
             s.key = s.pk;   //  to reduce React.js warnings
             return React.createElement(Status, s);
-        });
-        console.log('statuses=', statuses); 
-        return <div className='board'><h1>Drello Board</h1>{statuses}</div>
+        }); 
+        return <div><h1>Drello Board</h1><div className='board'>{statuses}</div></div>
     }
 });
 

@@ -39,7 +39,7 @@
     Displayed them
     It happens to be very important to provide unique 'key' in props for child components. 
 
-
+7)  Added ugly nazi styles, used 'display: flex' everywhere.
 
 
 
