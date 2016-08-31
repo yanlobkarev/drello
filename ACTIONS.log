@@ -34,7 +34,10 @@
     api available at 'api/statuses'
 
 6)  Needs to add React shit.
-
+    Add STATICFILES_DIRS to 'settings.py' and static routing in 'urls.py'
+    Added Board, Status, Task React components
+    Displayed them
+    It happens to be very important to provide unique 'key' in props for child components. 
 
 
 

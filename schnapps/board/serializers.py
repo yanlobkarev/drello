@@ -5,14 +5,14 @@ from models import Task, Status
 class TaskSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Task
-        fields = ('title', 'description')
+        fields = ('title', 'description', 'pk', )
 
 
 class StatusSerializer(serializers.HyperlinkedModelSerializer):
     tasks = TaskSerializer(many=True)
     class Meta:
         model = Status
-        fields = ('title', 'tasks', )
+        fields = ('title', 'tasks', 'pk', )
 
 
 
