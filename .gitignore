@@ -5,3 +5,4 @@ env/
 _trial_temp/
 *.swp
 db.sqlite3
+logs/*
