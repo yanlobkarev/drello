@@ -22,7 +22,7 @@ body {
     justify-content: space-around;
 }
 
-//  Status column
+/*  Status column */
 div.status {
     height: 100%;
     background-color: #A8AD87;
@@ -30,7 +30,7 @@ div.status {
     margin: 20px;
 }
 
-//  Task card
+/*  Task card */
 div.task {
     background-color: #E3FF9C;
     height: 100px;
@@ -41,7 +41,7 @@ div.task {
     position: relative;
 }
 
-//  Delete button
+/*  Delete button */
 div.task p {
     position: absolute;
     top: 4px;
@@ -53,7 +53,7 @@ div.status-bar {
     position: relative;
 }
 
-//  Add button
+/*  Add button */
 div.status-bar p {
     position: absolute;
     margin: 0px;
