@@ -2,13 +2,12 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from views import board_index
 from rest_framework import routers
-from views import StatusesViewSet
+from views import StatusesViewSet, TasksViewSet
 
 
 router = routers.DefaultRouter()
 router.register(r'statuses', StatusesViewSet)
-
-print StatusesViewSet
+router.register(r'tasks', TasksViewSet)
 
 
 urlpatterns = [

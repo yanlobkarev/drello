@@ -22,6 +22,7 @@ body {
     justify-content: space-around;
 }
 
+//  Status column
 div.status {
     height: 100%;
     background-color: #A8AD87;
@@ -29,6 +30,7 @@ div.status {
     margin: 20px;
 }
 
+//  Task card
 div.task {
     background-color: #E3FF9C;
     height: 100px;
@@ -36,8 +38,28 @@ div.task {
     align-items: center;
     justify-content: center;
     margin: 10px;
+    position: relative;
 }
 
+//  Delete button
+div.task p {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    margin: 0px;
+}
+
+div.status-bar {
+    position: relative;
+}
+
+//  Add button
+div.status-bar p {
+    position: absolute;
+    margin: 0px;
+    right: 14px;
+    top: 8px;
+}
 
 
 

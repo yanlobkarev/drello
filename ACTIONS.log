@@ -40,10 +40,14 @@
     It happens to be very important to provide unique 'key' in props for child components. 
 
 7)  Added ugly nazi styles, used 'display: flex' everywhere.
-
-
-
-
+    Added '+' and 'X' buttons for adding/deleting tasks.
+    But before adding Task CRUD API, I need to add tests.
+    Used 'rest_framework.test.APIClient' cuz it easy to start with first failing test.
+    Adding REST CRUD endpoint for single model was easy as shit:
+        By adding again 'rest_framework.viewsets.ModelViewSet' for Task.
+    Re-running test: failed with authentication
+    Disabled them in each view sets (authentication_classes = permission_classes = [])
+    Test passed!
 
 
 

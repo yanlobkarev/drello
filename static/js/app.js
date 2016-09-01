@@ -7,8 +7,14 @@ var Task = React.createClass({
     getInitialState: function () {        
         return this.props;
     },
+    _onRemoveTask: function () {
+        console.log('Remove task ', this.state.title);
+    },
     render: function () {
-        return <div className='task' id={this.state.pk}><h3>{this.state.title}</h3></div>
+        return  <div className='task' id={this.state.pk}>
+                    <p onClick={this._onRemoveTask}>X</p>
+                    <h3>{this.state.title}</h3>
+                </div>
     }
 });
 
@@ -21,12 +27,21 @@ var Status = React.createClass({
     getInitialState: function () {        
         return this.props;
     },
+    _onAddTask: function () {
+        console.log('Add Task');
+    },
     render: function () {
         var tasks = _.map(this.state.tasks, function (task) {
             task.key = task.pk;
             return React.createElement(Task, task);
         });
-        return <div className='status' id={this.state.pk}><h2>{this.state.title}</h2>{tasks}</div>
+        return  <div className='status' id={this.state.pk}>
+                    <div className='status-bar'>
+                        <h2>{this.state.title}</h2>
+                        <p onClick={this._onAddTask}>+</p>
+                    </div>
+                    {tasks}
+                </div>
     }
 });
 

@@ -5,7 +5,7 @@ from models import Task, Status
 class TaskSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Task
-        fields = ('title', 'description', 'pk', )
+        fields = ('title', 'description', 'status', 'pk', )
 
 
 class StatusSerializer(serializers.HyperlinkedModelSerializer):
