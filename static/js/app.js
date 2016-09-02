@@ -1,4 +1,11 @@
+var APIMixin = {
+    componentWillMount: function () {
+        this.api = APIClient();
+    }
+};
+
 var Task = React.createClass({
+    mixins: [APIMixin],
     propTypes: {
         description: React.PropTypes.string, 
         title: React.PropTypes.string,
@@ -7,12 +14,16 @@ var Task = React.createClass({
     getInitialState: function () {        
         return this.props;
     },
-    _onRemoveTask: function () {
-        console.log('Remove task ', this.state.title);
+    _onDeleteTask: function () {
+        var self = this;
+        this.api.deleteTask(this.state.pk, this._onTaskDeletedCb);
+    },
+    _onTaskDeletedCb: function (data) {
+        console.log('Task removed', data);
     },
     render: function () {
         return  <div className='task' id={this.state.pk}>
-                    <p onClick={this._onRemoveTask}>X</p>
+                    <p onClick={this._onDeleteTask}>X</p>
                     <h3>{this.state.title}</h3>
                 </div>
     }
@@ -20,6 +31,7 @@ var Task = React.createClass({
 
 
 var Status = React.createClass({
+    mixins: [APIMixin],
     propTypes: {
         title: React.PropTypes.string,
         pk: React.PropTypes.number,
@@ -28,7 +40,11 @@ var Status = React.createClass({
         return this.props;
     },
     _onAddTask: function () {
-        console.log('Add Task');
+        var self = this;
+        this.api.createTaskWithStatus(self.state.pk, this._onTaskAddedCb); 
+    },
+    _onTaskAddedCb: function (data) {
+        console.log('on Task Added data=', data);
     },
     render: function () {
         var tasks = _.map(this.state.tasks, function (task) {
