@@ -3,7 +3,7 @@ from django.db import models
 
 
 class Task(models.Model):
-    title = models.CharField(max_length=150)
+    title = models.CharField(max_length=150, blank=True)
     description = models.TextField(blank=True, max_length=500)
     status = models.ForeignKey('Status', on_delete=models.SET_NULL, blank=True, null=True,
                 related_name='tasks')
