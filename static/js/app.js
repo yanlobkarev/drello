@@ -1,6 +1,6 @@
 var APIMixin = {
     componentWillMount: function () {
-        this.api = APIClient();
+        this.api = new APIClient();
     }
 };
 
