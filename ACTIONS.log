@@ -47,12 +47,19 @@
         By adding again 'rest_framework.viewsets.ModelViewSet' for Task.
     Re-running test: failed with authentication
     Disabled them in each view sets (authentication_classes = permission_classes = [])
-    Test passed!
+    Tests passed!
 
-
-
-
-
+8)  Gotcha: EVERYWHERE USE '#!/usr/bin/env python' SHEBANG WHEN USES VIRTUALENV. BITCH!
+    Added Django channels websockets for broadcasting events.
+    (Used following tutorials:
+        https://channels.readthedocs.io/en/latest/getting-started.html
+        https://blog.heroku.com/in_deep_with_django_channels_the_future_of_real_time_apps_in_django)
+    Added Django (post_save, post_delete) signals receivers in 'signals.py' 
+    (To enable them had to import 'signals.py' in 'django.BoardConfig.ready()' and \
+    specify 'default_app_config' in 'schnapps.board.__init__.py')
+    Then, I connected signal receivers to channels Group.
+    Subscribed React 'Status' component to reply_channels (websocket) updates.
+    And all 'Task' creations/deletions are synchronously displayed in separate browser tabs.
 
 
 

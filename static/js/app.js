@@ -1,6 +1,7 @@
 var APIMixin = {
     componentWillMount: function () {
         this.api = new APIClient();
+        this.api.subscribe(this);
     }
 };
 
@@ -19,7 +20,7 @@ var Task = React.createClass({
         this.api.deleteTask(this.state.pk, this._onTaskDeletedCb);
     },
     _onTaskDeletedCb: function (data) {
-        console.log('Task removed', data);
+        //  pass
     },
     render: function () {
         return  <div className='task' id={this.state.pk}>
@@ -44,7 +45,21 @@ var Status = React.createClass({
         this.api.createTaskWithStatus(self.state.pk, this._onTaskAddedCb); 
     },
     _onTaskAddedCb: function (data) {
-        console.log('on Task Added data=', data);
+        //  pass
+    },
+    onmessage: function (data) {
+        if (data.status !== this.state.pk) {
+            return;
+        }
+
+        var tasks = this.state.tasks;
+        var i = _.findIndex(tasks, {pk: data.pk});
+        if (data.action === 'created') {
+            tasks.push(data);
+        } else if (data.action === 'deleted') {
+            tasks.splice(i, 1);
+        }
+        this.setState(this.state);
     },
     render: function () {
         var tasks = _.map(this.state.tasks, function (task) {

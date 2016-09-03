@@ -1,7 +1,10 @@
 from __future__ import unicode_literals
-
 from django.apps import AppConfig
 
 
 class BoardConfig(AppConfig):
-    name = 'board'
+    name = 'schnapps.board'
+
+    def ready(self):
+        import signals
+

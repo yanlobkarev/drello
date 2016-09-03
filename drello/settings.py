@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     #   Libs
+    'channels',
     'rest_framework',
 
     #   Trello apps
@@ -134,6 +135,13 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "asgiref.inmemory.ChannelLayer",
+        "ROUTING": "drello.routing.channel_routing",
+    },
+}
 
 LOGGING = {
     'version': 1,
