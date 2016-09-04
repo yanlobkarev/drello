@@ -93,8 +93,7 @@ var Status = React.createClass({
         return this.props;
     },
     _onAddTask: function () {
-        var self = this;
-        this.api.createTaskWithStatus(self.state.pk); 
+        this.api.createTaskWithStatus(this.state.pk); 
     },
     onmessage: function (data) {
         if (data.action === 'updated') {
