@@ -5,6 +5,32 @@ var APIMixin = {
     }
 };
 
+//  Solution for React contentEditable taken from 
+//  http://stackoverflow.com/questions/22677931/react-js-onchange-event-for-contenteditable
+var ContentEditable = React.createClass({ 
+    render: function(){
+        return <h3 
+            onInput={this.emitChange} 
+            onBlur={this.emitChange}
+            contentEditable
+            dangerouslySetInnerHTML={{__html: this.props.html}}></h3>;
+    },
+    shouldComponentUpdate: function(nextProps){
+        return nextProps.html !== ReactDOM.findDOMNode(this).innerHTML;
+    },
+    emitChange: function(){
+        var html = ReactDOM.findDOMNode(this).innerHTML;
+        if (this.props.onChange && html !== this.lastHtml) {
+            this.props.onChange({
+                target: {
+                    value: html
+                }
+            });
+        }
+        this.lastHtml = html;
+    }
+});
+
 var Task = React.createClass({
     mixins: [APIMixin],
     propTypes: {
@@ -16,16 +42,36 @@ var Task = React.createClass({
         return this.props;
     },
     _onDeleteTask: function () {
-        var self = this;
-        this.api.deleteTask(this.state.pk, this._onTaskDeletedCb);
+        this.api.deleteTask(this.state.pk);
     },
-    _onTaskDeletedCb: function (data) {
-        //  pass
+    _onChange: function (data) {
+        var self = this;
+
+        //  Relaxing api calls intensity
+        //  (gonna be called after second
+        //  when user stopped typing)
+        clearTimeout(this.delayedUpdate);
+        this.delayedUpdate = setTimeout(function () {
+            self.api.updateTask({
+                pk: self.state.pk,
+                title: data.target.value,
+            });
+        }, 1000);
+    },
+    onmessage: function (data) {
+        if (data.pk !== this.state.pk) {
+            return;
+        }
+
+        this.setState(data);
     },
     render: function () {
-        return  <div className='task' id={this.state.pk}>
+        return <div className='task' id={this.state.pk}>
                     <p onClick={this._onDeleteTask}>X</p>
-                    <h3>{this.state.title}</h3>
+                    <ContentEditable 
+                        html={this.state.title}
+                        onChange={this._onChange} 
+                        ref='input' />
                 </div>
     }
 });

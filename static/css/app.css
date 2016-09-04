@@ -4,6 +4,7 @@ h1, h2, h3 {
 
 h3 {
     margin: 5px;
+    min-width: 80px;    /* So, empty contenteditable h3 gonna be easy to click */
 }
 
 div#app, #app>div, html, body {
@@ -60,18 +61,6 @@ div.status-bar p {
     right: 14px;
     top: 8px;
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -10,11 +10,9 @@ def on_task_saved(sender, **kwargs):
     new = kwargs.get('created')
     action = 'created' if new else 'updated'
     ws_send_updates(instance, action)
-    print 'Post Saved new=', new, instance.pk
 
 
 @receiver(post_delete, sender=Task)
 def on_task_deleted(sender, **kwargs):
     ws_send_updates(kwargs.get('instance'), 'deleted')
-    print 'Post Deleted pk=', kwargs.get('instance').pk
 

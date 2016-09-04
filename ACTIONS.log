@@ -47,6 +47,7 @@
         By adding again 'rest_framework.viewsets.ModelViewSet' for Task.
     Re-running test: failed with authentication
     Disabled them in each view sets (authentication_classes = permission_classes = [])
+    './manage.py test'
     Tests passed!
 
 8)  Gotcha: EVERYWHERE USE '#!/usr/bin/env python' SHEBANG WHEN USES VIRTUALENV. BITCH!
@@ -61,8 +62,8 @@
     Subscribed React 'Status' component to reply_channels (websocket) updates.
     And all 'Task' creations/deletions are synchronously displayed in separate browser tabs.
 
-
-
+9)  Now I need 'Task' title editing.
+    
 
 
 

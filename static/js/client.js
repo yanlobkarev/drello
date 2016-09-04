@@ -35,6 +35,17 @@
                 cache: false,
             });
         };
+        this.updateTask = function (data, cb) {
+            $.post({
+                url: '/api/tasks/'+data.pk+'/',
+                type: 'PUT',
+                data: data,
+                dataType: 'json',
+                success: cb,
+                error: eb,
+                cache: false,
+            });
+        };
         this.deleteTask = function (pk, cb) {
             $.ajax({ 
                 type: 'DELETE',
@@ -47,15 +58,5 @@
         }
     };
 })(window); 
-
-
-
-
-
-
-
-
-
-
 
 
