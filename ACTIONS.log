@@ -79,7 +79,6 @@
                 test_tasks.py
                 test_broadcasts.py
     
-
-
-
+11) And last but not least. We need to be able to change task's status.
+    Used HTML5 drag-and-drop, PUT ajax api call, and a bit js wankering.
 

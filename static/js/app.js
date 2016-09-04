@@ -2,7 +2,10 @@ var APIMixin = {
     componentWillMount: function () {
         this.api = new APIClient();
         this.api.subscribe(this);
-    }
+    },
+    componentWillUnmount: function () {
+        this.api.unsubscribe(this);
+    },
 };
 
 //  Solution for React contentEditable taken from 
@@ -62,11 +65,14 @@ var Task = React.createClass({
         if (data.pk !== this.state.pk) {
             return;
         }
-
         this.setState(data);
     },
+    _onDragStart: function (e) {
+        e.dataTransfer.setData('text', JSON.stringify(this.state));
+    },
     render: function () {
-        return <div className='task' id={this.state.pk}>
+        return <div className='task' id={this.state.pk}
+                    draggable='true' onDragStart={this._onDragStart}>
                     <p onClick={this._onDeleteTask}>X</p>
                     <ContentEditable 
                         html={this.state.title}
@@ -88,31 +94,67 @@ var Status = React.createClass({
     },
     _onAddTask: function () {
         var self = this;
-        this.api.createTaskWithStatus(self.state.pk, this._onTaskAddedCb); 
-    },
-    _onTaskAddedCb: function (data) {
-        //  pass
+        this.api.createTaskWithStatus(self.state.pk); 
     },
     onmessage: function (data) {
-        if (data.status !== this.state.pk) {
-            return;
-        }
+        if (data.action === 'updated') {
+            var tasksPks = _.pluck(this.state.tasks, 'pk');
+            var wasInTasks = _.contains(tasksPks, data.pk);
+            var nowInTasks = data.status === this.state.pk;
 
-        var tasks = this.state.tasks;
-        var i = _.findIndex(tasks, {pk: data.pk});
-        if (data.action === 'created') {
-            tasks.push(data);
-        } else if (data.action === 'deleted') {
-            tasks.splice(i, 1);
+            if (!wasInTasks && nowInTasks) {            //  moved in
+                this.state.tasks.push(data);
+                this.setState(this.state);
+            } else if (wasInTasks && !nowInTasks) {     //  moved out
+                var i = _.findIndex(this.state.tasks, {pk: data.pk});
+                this.state.tasks.splice(i, 1);
+                this.setState(this.state);
+            }
+        } else if (data.status === this.state.pk) {
+            var tasks = this.state.tasks;        
+            if (data.action === 'created') {            //  added
+                tasks.push(data);
+            } else if (data.action === 'deleted') {     //  deleted
+                var i = _.findIndex(tasks, {pk: data.pk});
+                tasks.splice(i, 1);
+            }
+            this.setState(this.state);
         }
+    },
+    _onDragOver: function (e) {
+        e.preventDefault()
+    },
+    _onDrop: function (e) {
+        e.preventDefault();
+
+        var self = this;
+        var task = JSON.parse(e.dataTransfer.getData('text'));
+        this.api.updateTask({
+            pk: task.pk,
+            status: self.state.pk,
+        });
+
+        //  Manually moving model from one status to another
+        //  to boost UI interaction (cuz waiting websocket
+        //  update kinda longer).
+        var oldStatus = window.board.refs['status'+task.status];
+        var i = _.findIndex(oldStatus.state.tasks, {pk: task.pk})
+        oldStatus.state.tasks.splice(i, 1)
+        oldStatus.setState(oldStatus.state)
+        
+        task.status = this.state.pk;
+        this.state.tasks.push(task);
         this.setState(this.state);
     },
     render: function () {
         var tasks = _.map(this.state.tasks, function (task) {
-            task.key = task.pk;
-            return React.createElement(Task, task);
+            return React.createElement(Task, _.extend(task, {
+                stateElement: this,
+                key: task.pk,
+            }));
         });
-        return  <div className='status' id={this.state.pk}>
+        return  <div className='status' id={this.state.pk} 
+                     onDrop={this._onDrop} onDragOver={this._onDragOver}>
                     <div className='status-bar'>
                         <h2>{this.state.title}</h2>
                         <p onClick={this._onAddTask}>+</p>
@@ -146,18 +188,15 @@ var Board = React.createClass({
     }, 
     render: function () {
         var statuses = _.map(this.state.statuses, function (s) {
-            s.key = s.pk;   //  to reduce React.js warnings
-            return React.createElement(Status, s);
+            return React.createElement(Status, _.extend(s, {
+                ref: 'status'+s.pk, //  to access globally via `window.board.status1`
+                key: s.pk,          //  to reduce React.js warnings
+            }));
         }); 
         return <div><h1>Drello Board</h1><div className='board'>{statuses}</div></div>
     }
 });
 
-
-ReactDOM.render(
-    React.createElement(Board),
-    document.getElementById("app")
-);
-
+window.board = ReactDOM.render(React.createElement(Board), $("#app")[0]);
 
 

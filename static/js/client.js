@@ -21,6 +21,12 @@
         this.subscribe = function (obj) {
             subscribers.push(obj);
         };
+        this.unsubscribe = function (obj) {
+            var i = subscribers.indexOf(obj);
+            if (i > -1) {
+                subscribers.splice(i, 1);
+            }
+        };
         this.createTaskWithStatus = function (statusPk, cb) {
             $.post({
                 url: '/api/tasks/',
