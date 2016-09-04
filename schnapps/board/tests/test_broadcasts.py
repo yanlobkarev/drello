@@ -10,6 +10,10 @@ class BroadcastsTest(ChannelTestCase):
     Tests that each `Task` action (create/
     update/delete) broadcasted via django 
     channels `Group("subscribers")`.
+
+    Also it takes into account that updates
+    messages serialized via `TaskSerializer`
+    (rest_framework).
     '''
 
     def setUp(self):
