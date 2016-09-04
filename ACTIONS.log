@@ -63,8 +63,22 @@
     And all 'Task' creations/deletions are synchronously displayed in separate browser tabs.
 
 9)  Now I need 'Task' title editing.
+    Before added 'Update' section to CRUD tests.
+    Added 'contentEditable="true"' to 'Task' <h3/> tag.
+    Caught it's changes with 'onChange'.
+    fucked a little to reset state of child <h3/>, but easiest way
+        was to re-render it. React preserves <h3/>'s focused state 
+        hence. But doesn't preserve cursor position (Shit!).      
     
-
+10) We completely forgot to add signals/channels test. 
+    Need to fill this gap. Also we need to do it separate test script.
+    So apps 'tests.py' develops to following files structure:
+        board/
+            tests/
+                __init__.py
+                test_tasks.py
+                test_broadcasts.py
+    
 
 
 
