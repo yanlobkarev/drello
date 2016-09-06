@@ -14,3 +14,4 @@ touch db.sqlite3
 # proceed to http://localhost:8000/admin/ to add Statuses to Trello board
 # see em rolling on http://localhost:8000/
 ```
+![Drello](https://raw.githubusercontent.com/yanlobkarev/drello/master/static/images/screenshot.png)
